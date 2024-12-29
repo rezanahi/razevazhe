@@ -23,6 +23,8 @@ function Test () {
         console.log('correct answer = ', questions[currentQuestionIndex].correctAnswerId)
         if(questions[currentQuestionIndex].correctAnswerId === +selectedAnswer) {
             setScore(prevState => prevState + 1)
+        } else {
+            setIncorrectAnswers(prevState => [...prevState, currentQuestionIndex])
         }
         if (currentQuestionIndex + 1 === 10) {
             if(questions[currentQuestionIndex].correctAnswerId === +selectedAnswer) {
@@ -30,6 +32,7 @@ function Test () {
             } else {
                 increaseUserXpPoint(score)
             }
+
         }
     }
 
@@ -48,9 +51,29 @@ function Test () {
                             امتیاز شما در این مسابقه : {score}
                         </h1>
 
+                        <div
+                            className="max-w-3xl w-full sm:w-3/4 md:w-1/2 mx-auto p-6 shadow-md rounded-lg space-y-6 border border-blue-500 text-white">
+                            {/* صورت سوال */}
+                            <div className="text-xl font-semibold flex justify-between flex-col gap-4">
+                                <p>سوالاتی که غلط پاسخ داده اید</p>
+                                <div className='flex gap-2'>
+                                    {incorrectAnswers.map((item, index) => {
+                                        return (
+                                            <>
+                                                <div key={index}
+                                                     className='w-8 h-8 pt-px bg-blue-500 px-px rounded text-amber-200 flex justify-center items-center'>{item + 1}</div>
+                                            </>
+                                        )
+                                    })}
+                                </div>
+                            </div>
+                        </div>
+
                         <div className="mt-8 flex flex-wrap justify-center gap-4">
-                            <button onClick={() => {window.location.reload()}}
-                                  className="transition block w-full rounded border border-blue-600 bg-blue-600 px-12 py-3 text-sm font-medium text-white hover:bg-transparent hover:text-white focus:outline-none focus:ring active:text-opacity-75 sm:w-auto">
+                            <button onClick={() => {
+                                window.location.reload()
+                            }}
+                                    className="transition block w-full rounded border border-blue-600 bg-blue-600 px-12 py-3 text-sm font-medium text-white hover:bg-transparent hover:text-white focus:outline-none focus:ring active:text-opacity-75 sm:w-auto">
                                 مسابقه جدید
                             </button>
                             <Link to='/'
@@ -59,6 +82,7 @@ function Test () {
                             </Link>
                         </div>
                     </div>
+
                 </div>
             </section>
         )
